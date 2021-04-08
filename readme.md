@@ -1,6 +1,6 @@
 # LMS - SEARCH/QUERY MODULE
 
-This app uses the handy tool JSON server to fake a REST API. So 2 steps are involved to get this app running.
+This app uses the handy tool JSON server to fake a REST API. So 2 steps are involved to get this app running on localhost
 
 1. Download the Repository.
 2. Install as normal.
