@@ -36,11 +36,12 @@ const CourseDetails = (props) => {
     return (
         <>
             <div className="course-details" key={course.id}>
+            <h1 className="course-details__title">{course.title}</h1>
                 <div className="course-details__picture">
                     <img src={course.image_480x270} alt={course.url} />
                 </div>
                 <div className="course-details__main">
-                    <h2 className="course-details__title">{course.title}</h2>
+  
                     <p className="course-details__headline" dangerouslySetInnerHTML={{ __html: course.headline }} />
                     <p>created by <span style={{ color: '#0073cf' }}>{course.visible_instructors[0].display_name}</span></p>
                     <p>{course.rating.toFixed(1)} <i className="fas fa-star" style={{ color: 'orange' }}></i> | {course.num_reviews} (reviews)</p>
