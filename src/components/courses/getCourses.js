@@ -1,13 +1,18 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react'
+
 import AppStoreContext from '../../contexts/AppStore'
-
 import Course from './Course'
-
 import InfiniteScroll from 'react-infinite-scroller'
 import Spinner from '../ui/Spinner'
-
 import coursesAPI from '../../apis/courses'
 import FilterButtons from './FilterButtons'
+
+
+// Redux
+import { connect } from 'react-redux'
+import { asyncStart, asyncEnd } from '../../actions'
+// import { ASYNC_START, ASYNC_END } from '../../actions/types'
+
 
 // Each course contains a property called categories, 
 // mainCatagory, subCatagroy, topic
@@ -16,6 +21,11 @@ import FilterButtons from './FilterButtons'
 // categories:["development","web","react"]
 // 
 // lookupTables is used - using computed member access operator to get the desired 'category'
+
+const actions = {
+    asyncStart,
+    asyncEnd
+}
 
 const MAIN = 0
 const SUB = 1
@@ -32,6 +42,8 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const GetCourses = (props) => {
 
+    console.log("PROPS",props)
+
     const { state, dispatch } = useContext(AppStoreContext)
     const { catagory, subcatagory, topic, query } = props.match.params;
 
@@ -42,12 +54,20 @@ const GetCourses = (props) => {
     const [count, setCount] = useState({})
     const [filter, setFilter] = useState([])
 
+
+    const { isLoading, asyncStart, asyncEnd } = props
+
+    console.log("isloading",isLoading)
+
+
     // Grab the data once mounted and/or props changes
 
     useEffect(() => {
         (async () => {
 
-            dispatch({ type: "ASYNC_START" })
+            // dispatch({ type: "ASYNC_START" })
+
+            asyncStart()
 
             await wait(700) // for development only
 
@@ -79,7 +99,8 @@ const GetCourses = (props) => {
             }
 
             setFilter([])
-            dispatch({ type: "ASYNC_END" })
+            // dispatch({ type: "ASYNC_END" })
+            asyncEnd()
 
         })()
     }, [dispatch, catagory, subcatagory, topic, query])
@@ -104,7 +125,7 @@ const GetCourses = (props) => {
     return (
         <Fragment>
 
-            {state.loading ?
+            {isLoading ?
                 <Spinner />
                 :
                 <section>
@@ -188,4 +209,12 @@ const GetCourses = (props) => {
 
 }
 
-export default GetCourses
+// Get values from redux store and map to props
+
+const mapStateToProps = state => {
+    return {
+        isLoading:state.async.loading
+    }
+}
+
+export default connect(mapStateToProps,actions)(GetCourses)

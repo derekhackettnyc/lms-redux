@@ -1,18 +1,21 @@
 import React from 'react'
-import AppStoreContext from '../../contexts/AppStore'
 import coursesAPI from '../../apis/courses'
 import Course from './Course'
 import SlickSlider from '../ui/SlickSlider'
 import Spinner from '../ui/Spinner'
+
+// Redux
+import { connect } from 'react-redux'
+import { asyncStart, asyncEnd } from '../../actions'
 
 // Fetch and displays the course based on id
 // example /development/web/react/1362070
 
 const CourseDetails = (props) => {
 
+    const { isLoading, asyncStart, asyncEnd } = props
     const { id } = props.match.params;
 
-    const { state, dispatch } = React.useContext(AppStoreContext)
     const [course, setCourse] = React.useState(null)
     const [otherCourses, setOtherCourses] = React.useState([])
     const [sliderCourses, setSliderCourses] = React.useState([])
@@ -22,10 +25,11 @@ const CourseDetails = (props) => {
     React.useEffect(() => {
         (async () => {
             try {
-                dispatch({ type: "ASYNC_START" })
+                asyncStart()
+
                 await wait(700) // for development only
     
-                const responseOne = await coursesAPI.get(`/courses1/${id}`)
+                const responseOne = await coursesAPI.get(`/courses/${id}`)
                 const responseMany = await coursesAPI.get(`/courses/`)
     
                 setCourse(responseOne.data)
@@ -37,18 +41,14 @@ const CourseDetails = (props) => {
                 console.log("ERROR",error)
             }
             finally {
-                dispatch({ type: "ASYNC_END" })
+                asyncEnd()
             }              
         })()
     }, [])
 
-
-
-    // if (!course) return null
-
     return (
         <>
-            { state.loading ?
+            { isLoading ?
                 <Spinner />
                 :
                 <>
@@ -124,4 +124,16 @@ const CourseDetails = (props) => {
     )
 }
 
-export default CourseDetails
+
+const actions = {
+    asyncStart,
+    asyncEnd
+}
+
+const mapStateToProps = state => {
+    return {
+        isLoading:state.async.loading
+    }
+}
+
+export default connect(mapStateToProps,actions)(CourseDetails)
