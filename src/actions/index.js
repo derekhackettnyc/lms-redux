@@ -1,41 +1,114 @@
-// import streams from '../apis/streams'
-// import history from '../history'
-// import { 
-//     SIGN_IN, 
-//     SIGN_OUT,
-//     CREATE_STREAM,
-//     FETCH_STREAMS,
-//     FETCH_STREAM, 
-//     DELETE_STREAM,
-//     EDIT_STREAM, 
-//     } from './types'
+import coursesAPI from '../apis/courses'
+import { ASYNC_START, ASYNC_END, ASYNC_ERROR, FETCH_COURSES, FILTER_COURSES } from './types'
 
-import { ASYNC_START, ASYNC_END, ASYNC_ERROR } from './types'
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 
 // Action creators for async operations
-
 export const asyncStart = () => ({type:ASYNC_START})
 export const asyncEnd = () => ({type:ASYNC_END })
 export const asyncError = () => ({type:ASYNC_ERROR })
 
+export const fetchCourses = (subcategory, topic) => async dispatch => {
 
+    // This action creator is called when a menu item is selected. 
 
+    dispatch(asyncStart())
+    await wait(700) // for development only
+    const response = await coursesAPI.get('/courses')
+    const filterData = response.data.filter(course => course.catagories[1] === subcategory && course.catagories[2] === topic)
+    dispatch({ type: FETCH_COURSES, payload: filterData})
+    dispatch(asyncEnd())
+}
 
-// export const signOut = () => {
-//     return {
-//         type: SIGN_OUT
+export const filterCourses = (query) => async dispatch => {
+
+    // This action creator is called when the user enters a query into the search bar
+
+    dispatch(asyncStart())
+
+    await wait(700) // for development only
+    const response = await coursesAPI.get(`/courses?title_like=${query}`)
+    dispatch({ type: FILTER_COURSES, payload: response.data})
+
+    dispatch(asyncEnd())
+}
+
+// export const filterCourses = () => async dispatch => {
+//     const response = await coursesAPI.get('/courses')
+//     dispatch({ type: FETCH_COURSES, payload: response.data})
+// }
+
+// export const fetchCourses = () => async dispatch => {
+//     try {
+
+//         console.log("SSDSDSDSDSDSDSDSD")
+//         const response = await coursesAPI.get('/courses')
+
+//         // dispatch(asyncStart())
+//         // const events = await fetchSampleData()
+//         // dispatch({ type: FETCH_EVENTS, payload: events })
+//         // dispatch(asyncEnd())
+//     } catch (error) {
+//         console.log("ERROR", error)
+//         // dispatch(asyncError())
+
 //     }
 // }
 
-// export const createStream = formValues => async (dispatch,getState) => {
-//     const { userId } = getState().auth
-//     const response = await streams.post(`/streams`,{...formValues, userId})
-//     dispatch({ type: CREATE_STREAM, payload: response.data})
-
-//     // Programmatic Navigation
-//     history.push('/')
+// export const fetchCourses = () => {
+//     console.log("SSDSDSDSDSDSDSDSD")
 // }
+// export const fetchCourses = () => async dispatch => {
+
+//     console.log("AAAAAAAaaaa")
+
+//     const response = await coursesAPI.get('/courses')
+//     console.log("response,data !!!",response.data)
+//     dispatch({ type: FETCH_COURSES, payload: response.data})
+
+// }
+
+// export const fetchCourses = () => async dispatch => {
+//     const response = await coursesAPI.get('/courses')
+//     dispatch({ type: FETCH_COURSES, payload: response.data})
+// }
+
+// export const filterCourses = (query) => async dispatch => {
+//     const response = await coursesAPI.get('/courses')
+//     dispatch({ type: FETCH_COURSES, payload: response.data})
+// }
+
+// export const fetchCourses = async () => {
+
+//     // console.log("AAAAAAAaaaa")
+
+//     const response = await coursesAPI.get('/courses')
+//     console.log("response,data !!!",response.data)
+//     return { 
+//         type: FETCH_COURSES, 
+//         payload: response.data
+//     }
+ 
+
+// }
+
+// export const fetchResources = () => async dispatch => {
+//     try {
+
+//         dispatch(asyncStart())
+//         const events = await fetchSampleData()
+//         dispatch({ type: FETCH_EVENTS, payload: events })
+//         dispatch(asyncEnd())
+//     } catch (error) {
+//         console.log("ERROR", error)
+//         dispatch(asyncError())
+
+//     }
+// }
+
+
+
 
 // export const fetchStreams = () => async dispatch => {
 //     const response = await streams.get(`/streams`)
