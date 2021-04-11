@@ -1,5 +1,5 @@
 import coursesAPI from '../apis/courses'
-import { ASYNC_START, ASYNC_END, ASYNC_ERROR, FETCH_COURSES, FILTER_COURSES } from './types'
+import { ASYNC_START, ASYNC_END, ASYNC_ERROR, FETCH_COURSES, FILTER_COURSES, OPEN_DROPDOWN } from './types'
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -32,6 +32,15 @@ export const filterCourses = (query) => async dispatch => {
     dispatch({ type: FILTER_COURSES, payload: response.data})
 
     dispatch(asyncEnd())
+}
+
+
+
+export const openDropDown = (category) => {
+    return{
+        type:OPEN_DROPDOWN,
+        payload: category
+}
 }
 
 // export const filterCourses = () => async dispatch => {

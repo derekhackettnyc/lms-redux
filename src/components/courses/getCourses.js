@@ -42,6 +42,8 @@ const GetCourses = (props) => {
 
         query ? filterCourses(query) : fetchCourses(subcatagory, topic)
 
+        setFilter([]) // Clear previous filter
+
     },[subcatagory, topic, query])
 
 
