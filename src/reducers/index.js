@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
 import asyncReducer from './asyncReducer'
-// import streamReducer from './streamReducer'
+import courseReducer from './courseReducer'
 
 export default combineReducers({
-    async:asyncReducer,
-    // streams: streamReducer
+    courses:courseReducer,
+    async:asyncReducer
 })
