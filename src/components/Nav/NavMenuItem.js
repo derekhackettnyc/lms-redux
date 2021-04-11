@@ -1,12 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
-import AppStoreContext from '../../contexts/AppStore';
 
 const NavMenuItem = props => {
 
-    const { state } = useContext(AppStoreContext)
-    const { category, menuItem, actions } = props
-    const openedDropDown = state.openDropDown
+    const { category, menuItem, actions, openedDropDown } = props
 
     if (category === 'signout')
         return (
@@ -96,4 +94,6 @@ const NavMenuItem = props => {
     )
 }
 
-export default NavMenuItem
+const mapStateToProps = state => ({openedDropDown:state.menu})
+
+export default connect(mapStateToProps,null)(NavMenuItem)
