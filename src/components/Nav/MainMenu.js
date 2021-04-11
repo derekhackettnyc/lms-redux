@@ -1,18 +1,15 @@
-import React, { useContext, useState, useEffect } from 'react';
-import NavMenuItem from './NavMenuItem'
-import AppStoreContext from '../../contexts/AppStore';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import NavMenuItem from './NavMenuItem'
 import { openDropDown } from '../../actions'
+
 
 const actions = {
     openDropDown
 }
 
-const MainMenu = props => {
+const MainMenu = ({ nav, isMenuDrawOpened, openDropDown, dropDown }) => {
 
-    const { openDropDown } = props
-
-    const { state, dispatch } = useContext(AppStoreContext) 
     const [touchDevice, setTouchDevice] = useState(false)
 
     const onFirstTouch = () => {
@@ -27,30 +24,19 @@ const MainMenu = props => {
         }
     }, []);    
 
-    const handleClickEvent = (nav) => {
-        // dispatch({type:'OPEN_DROPDOWN', payload:''})
+    const handleClickEvent = () => {
         openDropDown('')
-        dispatch({type:'SELECT_NAVIGATION', payload:nav})
-        console.log("here")
-        // dispatch({type:'MENUDRAW_OPENED', payload:false})
     }
 
     const handleTouchStart = (category) => {
         openDropDown(category)
-        // return (state.openedDropDown ? dispatch({type:'OPEN_DROPDOWN', payload:''}) : dispatch({type:'OPEN_DROPDOWN', payload:category}))
-        return state.openedDropDown ? openDropDown('') : openDropDown(category)
-
+        // return dropDown ? openDropDown('') : openDropDown(category)
     }
 
     const handleUserEvent = (event, category) => {
         event.stopPropagation()
         openDropDown(category)
-        // dispatch({type:'OPEN_DROPDOWN', payload:category})
-        console.log("there")
-
     }
-
-        const { nav } = props
 
         const actions = {
             handleClickEvent,
@@ -60,7 +46,7 @@ const MainMenu = props => {
 
         return (
 
-            <nav id="mainNav" className={`overlay ${props.isMenuDrawOpened? "opened" : "closed"}`}  >
+            <nav id="mainNav" className={`overlay ${isMenuDrawOpened? "opened" : "closed"}`}  >
                 <div className="overlay-content">
                     <ul
                         className={`navigation ${!touchDevice ? "non-touch" : ""}`}
@@ -79,10 +65,8 @@ const MainMenu = props => {
 
 const mapStateToProps = state => {
     return {
-        dropDown:state.menu
+        isMenuDrawOpened:state.menu.isDrawOpened
     }
 }
-
-
 
 export default connect(mapStateToProps,actions)(MainMenu)

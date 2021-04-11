@@ -2,9 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 
-const NavMenuItem = props => {
-
-    const { category, menuItem, actions, openedDropDown } = props
+const NavMenuItem = ( { category, menuItem, actions, dropDown } )=> {
 
     if (category === 'signout')
         return (
@@ -28,7 +26,7 @@ const NavMenuItem = props => {
         <li className="navigation__parent">
             <button className="navigation__button" onClick={() => actions.handleTouchStart(category)}>{`${menuItem.title}`}</button>
             <ul
-                className={`navigation__child ${openedDropDown === category || keys.includes(openedDropDown) ? 'navigation__child--opened' : ''}`}
+                className={`navigation__child ${dropDown === category || keys.includes(dropDown) ? 'navigation__child--opened' : ''}`}
                 onClick={event => event.stopPropagation()}
             >
                 {
@@ -40,7 +38,7 @@ const NavMenuItem = props => {
                             return (
                                 <li key={`${category}-${keys[index]}`} className="navigation__parent">
                                     <button className="navigation__button navigation__button--sub" onClick={(event) => actions.handleUserEvent(event, keys[index])}>{item.title}</button>
-                                    <ul className={`navigation__child navigation__child--sub ${openedDropDown === keys[index] ? "navigation__child--opened" : ""}`}>
+                                    <ul className={`navigation__child navigation__child--sub ${dropDown === keys[index] ? "navigation__child--opened" : ""}`}>
 
                                         {
                                             Object.values(item.sub).map((subItem, index) => {
@@ -94,6 +92,6 @@ const NavMenuItem = props => {
     )
 }
 
-const mapStateToProps = state => ({openedDropDown:state.menu})
+const mapStateToProps = state => ({dropDown:state.menu.dropDown})
 
 export default connect(mapStateToProps,null)(NavMenuItem)

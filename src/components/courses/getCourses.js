@@ -11,7 +11,7 @@ import { fetchCourses, filterCourses } from '../../actions'
 
 const actions = {
     fetchCourses,
-    filterCourses
+    filterCourses,
 }
 
 const MAIN = 0
@@ -34,7 +34,6 @@ const GetCourses = (props) => {
     const [perPage] = useState(5)
     const [count, setCount] = useState({})
     const [filter, setFilter] = useState([])
-
 
     useEffect(() => {
 
@@ -155,7 +154,7 @@ const GetCourses = (props) => {
 const mapStateToProps = state => {
     return {
         isLoading:state.async.loading,
-        courses:state.courses
+        courses:state.courses,
     }
 }
 

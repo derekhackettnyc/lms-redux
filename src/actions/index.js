@@ -1,5 +1,5 @@
 import coursesAPI from '../apis/courses'
-import { ASYNC_START, ASYNC_END, ASYNC_ERROR, FETCH_COURSES, FILTER_COURSES, OPEN_DROPDOWN } from './types'
+import { ASYNC_START, ASYNC_END, ASYNC_ERROR, FETCH_COURSES, FILTER_COURSES, OPEN_DROPDOWN, MENUDRAW_OPENED } from './types'
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -14,7 +14,9 @@ export const fetchCourses = (subcategory, topic) => async dispatch => {
     // This action creator is called when a menu item is selected. 
 
     dispatch(asyncStart())
+    dispatch(menuDrawOpened(false))
     await wait(700) // for development only
+
     const response = await coursesAPI.get('/courses')
     const filterData = response.data.filter(course => course.catagories[1] === subcategory && course.catagories[2] === topic)
     dispatch({ type: FETCH_COURSES, payload: filterData})
@@ -24,10 +26,10 @@ export const fetchCourses = (subcategory, topic) => async dispatch => {
 export const filterCourses = (query) => async dispatch => {
 
     // This action creator is called when the user enters a query into the search bar
-
     dispatch(asyncStart())
-
+    dispatch(menuDrawOpened(false))
     await wait(700) // for development only
+
     const response = await coursesAPI.get(`/courses?title_like=${query}`)
     dispatch({ type: FILTER_COURSES, payload: response.data})
 
@@ -35,13 +37,18 @@ export const filterCourses = (query) => async dispatch => {
 }
 
 
-
-export const openDropDown = (category) => {
-    return{
+export const openDropDown = category => ({
         type:OPEN_DROPDOWN,
         payload: category
-}
-}
+})
+
+
+export const menuDrawOpened = flag => ({
+    type: MENUDRAW_OPENED,
+    payload:flag
+})
+
+
 
 // export const filterCourses = () => async dispatch => {
 //     const response = await coursesAPI.get('/courses')
