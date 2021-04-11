@@ -10,6 +10,7 @@ import App from './components/App'
 import reducers from './reducers'
 
 import ScrollToTop from './components/ui/ScrollToTop'
+import thunk from 'redux-thunk'
 
 // ReactDom.render(
 //     <BrowserRouter>
@@ -26,7 +27,13 @@ import ScrollToTop from './components/ui/ScrollToTop'
 //     composeEnhancers(applyMiddleware(reduxThunk))
 //     )
 
-const store = createStore(reducers)
+// const store = createStore(reducers, applyMiddleware(reduxThunk))
+
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const store = createStore(reducers, applyMiddleware(thunk))
+// const store = createStore(reducers,
+//     composeEnhancers(applyMiddleware(reduxThunk))
+//     )
 
 
 console.log("store",store.getState())
