@@ -10,6 +10,7 @@ This app uses the handy tool JSON server to fake a REST API. So 2 steps are invo
 6. All systems ago !
 
 I hope this is ok
+this will causes issues
 
-some usefull searches as db is limited - 2021, react, a, edit, advance, edit, learn, script, begin, complete, and
+some usefull searches as db is limited - 2021, react, a, edit, advance, edit, learn, script, begin, complete, and, 2020
 
