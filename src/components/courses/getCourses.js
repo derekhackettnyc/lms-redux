@@ -39,11 +39,11 @@ const GetCourses = (props) => {
 
         // Once MOUNTED / PROPS CHANGED Grab the data
 
-        query ? filterCourses(query) : fetchCourses(subcatagory, topic)
+        query ? filterCourses(query) : fetchCourses(topic)
 
         setFilter([]) // Clear previous filter
 
-    },[subcatagory, topic, query])
+    },[topic, query])
 
 
     useEffect(() => {
@@ -78,7 +78,7 @@ const GetCourses = (props) => {
                                         <>
                                             <h1 className="page-heading">{`Totol of ${courses.length} courses for : ${query}`}</h1>
                                             {/* <FilterButtons lists={{ main:count.main, sub: count.sub, topic: count.topic }} handleClick={setFilter} selected={filter[1]} /> */}
-                                            <FilterButtons lists={{ sub: count.sub, topic: count.topic }} handleClick={setFilter} selected={filter[1]} />
+                                            <FilterButtons lists={{ main: count.main, sub: count.sub, topic: count.topic }} handleClick={setFilter} selected={filter[1]} />
 
                                         </>
                                         :

@@ -1,10 +1,9 @@
-import React, { Fragment, useContext, useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
 
 import Layout from './HOC/Layout';
 import HomePage from './Home';
 
-import AppStoreContext from '../contexts/AppStore';
 import { debounce } from './utils'
 
 import GetCourses from './courses/getCourses';
@@ -15,16 +14,14 @@ import '../resources/scss/wild-style.scss'
 
 const App = () => {
 
-    const { state, dispatch } = useContext(AppStoreContext)
+    // const myEfficientFn = debounce(() => dispatch({ type: 'MENUDRAW_OPENED', payload: false }), 500)
 
-    const myEfficientFn = debounce(() => dispatch({ type: 'MENUDRAW_OPENED', payload: false }), 500)
-
-    useEffect(() => {
-        window.addEventListener('resize', myEfficientFn);
-        return function cleanup() {
-            window.removeEventListener('resize', myEfficientFn)
-        }
-    }, [myEfficientFn]);
+    // useEffect(() => {
+    //     window.addEventListener('resize', myEfficientFn);
+    //     return function cleanup() {
+    //         window.removeEventListener('resize', myEfficientFn)
+    //     }
+    // }, [myEfficientFn]);
 
     return (
         <Fragment>
