@@ -1,14 +1,9 @@
 import coursesAPI from '../apis/courses'
-import { ASYNC_START, ASYNC_END, ASYNC_ERROR, FETCH_COURSES, FILTER_COURSES, OPEN_DROPDOWN, MENUDRAW_OPENED } from './types'
+import { wait } from '../components/utils'
 
-const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
+import { ASYNC_START, ASYNC_END, FETCH_COURSES, FILTER_COURSES, OPEN_DROPDOWN, MENUDRAW_OPENED } from './types'
 
-// Action creators for async operations
-export const asyncStart = () => ({type:ASYNC_START})
-export const asyncEnd = () => ({type:ASYNC_END })
-export const asyncError = () => ({type:ASYNC_ERROR })
-
-
+// actions creators
 
 export const fetchCourses = (topic) => async dispatch => {
 
@@ -22,7 +17,6 @@ export const fetchCourses = (topic) => async dispatch => {
     dispatch({ type: FETCH_COURSES, payload: response.data})
     dispatch(asyncEnd())
 }
-
 
 
 export const filterCourses = (query) => async dispatch => {
@@ -49,3 +43,9 @@ export const menuDrawOpened = flag => ({
     type: MENUDRAW_OPENED,
     payload:flag
 })
+
+
+// Action creators for async operations
+export const asyncStart = () => ({type:ASYNC_START})
+export const asyncEnd = () => ({type:ASYNC_END })
+

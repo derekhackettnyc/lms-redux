@@ -1,27 +1,29 @@
-import React, { Fragment, useEffect } from 'react';
-import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
+import React, { Fragment, useEffect } from 'react'
+import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { menuDrawOpened } from '../actions'
 
-import Layout from './HOC/Layout';
-import HomePage from './Home';
+import Layout from './HOC/Layout'
+import HomePage from './Home'
 
 import { debounce } from './utils'
 
-import GetCourses from './courses/getCourses';
+import GetCourses from './courses/getCourses'
 import CourseDetails from './courses/courseDetails'
 
 import '../resources/scss/wild-style.scss'
 
 
-const App = () => {
+const App = ({menuDrawOpened }) => {
 
-    // const myEfficientFn = debounce(() => dispatch({ type: 'MENUDRAW_OPENED', payload: false }), 500)
+    const myEfficientFn = debounce(() => menuDrawOpened(false), 500)
 
-    // useEffect(() => {
-    //     window.addEventListener('resize', myEfficientFn);
-    //     return function cleanup() {
-    //         window.removeEventListener('resize', myEfficientFn)
-    //     }
-    // }, [myEfficientFn]);
+    useEffect(() => {
+        window.addEventListener('resize', myEfficientFn);
+        return function cleanup() {
+            window.removeEventListener('resize', myEfficientFn)
+        }
+    }, [myEfficientFn]);
 
     return (
         <Fragment>
@@ -37,6 +39,7 @@ const App = () => {
     )
 }
 
-export default withRouter(App);
+
+export default withRouter(connect(null,{ menuDrawOpened })(App));
 
 
