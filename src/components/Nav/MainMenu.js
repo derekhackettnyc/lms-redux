@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
 import NavMenuItem from './NavMenuItem'
 import { openDropDown } from '../../actions'
 
 
-const actions = {
-    openDropDown
-}
+const MainMenu = ({ nav,  dropDown }) => {
 
-const MainMenu = ({ nav, isMenuDrawOpened, openDropDown, dropDown }) => {
+    const isMenuDrawOpened = useSelector( state => state.menu.isDrawOpened )
+    const dispatch = useDispatch()
 
     const [touchDevice, setTouchDevice] = useState(false)
 
@@ -25,17 +25,17 @@ const MainMenu = ({ nav, isMenuDrawOpened, openDropDown, dropDown }) => {
     }, []);    
 
     const handleClickEvent = () => {
-        openDropDown('')
+        dispatch(openDropDown(''))
     }
 
     const handleTouchStart = (category) => {
-        openDropDown(category)
+        dispatch(openDropDown(category))
         // return dropDown ? openDropDown('') : openDropDown(category)
     }
 
     const handleUserEvent = (event, category) => {
         event.stopPropagation()
-        openDropDown(category)
+        dispatch(openDropDown(category))
     }
 
         const actions = {
@@ -63,10 +63,4 @@ const MainMenu = ({ nav, isMenuDrawOpened, openDropDown, dropDown }) => {
         )
 }
 
-const mapStateToProps = state => {
-    return {
-        isMenuDrawOpened:state.menu.isDrawOpened
-    }
-}
-
-export default connect(mapStateToProps,actions)(MainMenu)
+export default MainMenu
