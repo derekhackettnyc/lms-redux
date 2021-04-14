@@ -13,7 +13,7 @@ import '../resources/scss/wild-style.scss'
 
 const App = () => {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const myEfficientFn = debounce(() => dispatch(menuDrawOpened(false)), 500)
 
