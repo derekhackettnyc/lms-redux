@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-// import { connect } from 'react-redux'
 import { useDispatch, useSelector } from "react-redux"
 
 import { menuDrawOpened } from '../../actions'
@@ -33,6 +32,4 @@ const Header = ({ nav }) => {
     )
 }
 
-
-// export default connect(mapStateToProps, { menuDrawOpened })(Header)
 export default Header
