@@ -34,7 +34,5 @@ const Header = ({ nav }) => {
 }
 
 
-// const mapStateToProps = state => ({ isMenuDrawOpened: state.menu.isDrawOpened })
-
 // export default connect(mapStateToProps, { menuDrawOpened })(Header)
 export default Header
