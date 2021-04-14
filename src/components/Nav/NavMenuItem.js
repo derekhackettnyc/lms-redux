@@ -1,8 +1,10 @@
 import React from 'react'
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-const NavMenuItem = ( { category, menuItem, actions, dropDown } )=> {
+const NavMenuItem = ( { category, menuItem, actions } )=> {
+
+    const dropDown = useSelector(state => state.menu.dropDown)
 
     if (category === 'signout')
         return (
@@ -92,6 +94,4 @@ const NavMenuItem = ( { category, menuItem, actions, dropDown } )=> {
     )
 }
 
-const mapStateToProps = state => ({dropDown:state.menu.dropDown})
-
-export default connect(mapStateToProps,null)(NavMenuItem)
+export default NavMenuItem
