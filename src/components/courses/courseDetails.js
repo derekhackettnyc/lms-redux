@@ -10,6 +10,7 @@ import { asyncStart, asyncEnd } from '../../actions'
 
 // Fetch and displays the course based on id
 // example /development/web/react/1362070
+//
 
 const CourseDetails = (props) => {
 

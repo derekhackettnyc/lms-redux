@@ -1,18 +1,18 @@
 import React, { useEffect, useState, Fragment } from 'react'
-import { connect } from 'react-redux'
+// import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Course from './Course'
 import InfiniteScroll from 'react-infinite-scroller'
 import Spinner from '../ui/Spinner'
 import FilterButtons from './FilterButtons'
 
-
 // Redux - actions creators
 import { fetchCourses, filterCourses } from '../../actions'
 
-const actions = {
-    fetchCourses,
-    filterCourses,
-}
+// const actions = {
+//     fetchCourses,
+//     filterCourses,
+// }
 
 const MAIN = 0
 const SUB = 1
@@ -26,8 +26,16 @@ const lookUpTable = {
 
 const GetCourses = (props) => {
 
-    const { isLoading, courses, fetchCourses, filterCourses } = props
+    // const { fetchCourses, filterCourses } = props
     const { catagory, subcatagory, topic, query } = props.match.params;
+
+    const { isLoading, courses } = useSelector(state => ({
+        isLoading:state.async.loading,
+        courses:state.courses,
+    }))
+
+    const dispatch = useDispatch()
+
 
     // Not using pagination, using InfiniteScroll to display new content when user scoll. 
     const [ptr, setPtr] = useState(0)
@@ -39,7 +47,7 @@ const GetCourses = (props) => {
 
         // Once MOUNTED / PROPS CHANGED Grab the data
 
-        query ? filterCourses(query) : fetchCourses(topic)
+        query ? dispatch(filterCourses(query)) : dispatch(fetchCourses(topic))
 
         setFilter([]) // Clear previous filter
 
@@ -151,12 +159,13 @@ const GetCourses = (props) => {
 }
 
 // Get values from redux store and map to props. Yes. Still using mapState - it's a GIT thing!
-const mapStateToProps = state => {
-    return {
-        isLoading:state.async.loading,
-        courses:state.courses,
-    }
-}
+// const mapStateToProps = state => {
+//     return {
+//         isLoading:state.async.loading,
+//         courses:state.courses,
+//     }
+// }
 
 // Still using connect - More GIT
-export default connect(mapStateToProps,actions)(GetCourses)
+// export default connect(mapStateToProps,actions)(GetCourses)
+export default GetCourses
